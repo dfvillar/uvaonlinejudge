@@ -1,34 +1,33 @@
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
-import java.util.*;
-import java.io.*;
-
-/*
- *  483 - Word Scramble
- */
 public class Main{
 	public static void main(String... args)throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String line = null;
-				
-		while( (line = br.readLine()) != null ){
-			char[] chrs = line.toCharArray();
-			int ln = chrs.length;
-			Deque<Character> stack = new ArrayDeque<Character>();
-			for(int i=0; i<ln; i++){
-				if(chrs[i] != ' '){
-					stack.addFirst(chrs[i]);
-				}else{
-					int size = stack.size();
-					while(size-- > 0)
-						System.out.print(stack.removeFirst());
-					System.out.print(" ");	
-				}										
-			}
-			int size = stack.size();
-				while(size-- > 0)
-					System.out.print(stack.removeFirst());	
-			System.out.println();			
+
+		final String keyboard = "`1234567890-=QWERTYUIOP[]\\ASDFGHJKL;'ZXCVBNM,./";
+		char[] keys = keyboard.toCharArray();
+		int[] ascii = new int[256];
+
+		for(int i=1; i<keys.length; i++){
+			ascii[(int)keys[i]] = (int)keys[i-1];
 		}
 		
-	}	
+		String line = null;
+		while( (line = br.readLine()) != null){
+
+			char[] letters = line.toCharArray();
+
+			for(int j=0; j<letters.length; j++){
+				if(letters[j] != ' ')
+					System.out.print((char)ascii[letters[j]]);
+				else
+					System.out.print(' ');
+			}
+			System.out.println("");	
+		}
+			
+	}
 }
+
